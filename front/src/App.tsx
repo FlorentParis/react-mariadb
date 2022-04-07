@@ -9,11 +9,17 @@ export default function App() {
       password: 'password'
     });
 
-    /* 02:12:24 */
+    const headers = new Headers({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': `Basic ${btoa('Francis:password')}`
+    })
 
     fetch('http://localhost:2345', {
       method: 'POST',
-      body: body
+      body: body,
+      headers: headers,
+      mode: 'cors',
+      credentials: 'include'
     })
       .then(res => res.json())
       .then(data => console.log(data))
