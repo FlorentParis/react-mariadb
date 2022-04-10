@@ -4,6 +4,9 @@ import Subscription from "./components/Subscription";
 import Login from "./components/Login";
 import BlogList from './components/BlogList';
 
+/* Beaucoup de choses à revoir, beaucoup de temps perdu à revoir mes fichier php qui etaient vraiment horribles... */
+/* Je ferais peut etre un autre push demain (donc le 11/04) pour avancer dans ce TP */
+
 export default function App() {
 
   const [mail, setMail] = useState<string>('');
@@ -43,7 +46,7 @@ export default function App() {
       {token ? <button onClick={deco}>Déconnexion</button> : '' }
       {!token ? <Subscription setMail={setMail} setPassword={setPassword} setType={setType} /> : '' }
       {!token ? <Login setMail={setMail} setPassword={setPassword} setType={setType}/> : '' }
-      {token ? <BlogList />  : '' }
+      {token ? <BlogList mail={mail} pw={password} />  : '' }
     </div>
   );
 }

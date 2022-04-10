@@ -6,7 +6,7 @@ class Post {
     private int $id;
     private string $title;
     private string $content;
-    private string $author_id;
+    private string $author;
     private string $created_at; 
 
     public function getId()
@@ -30,12 +30,12 @@ class Post {
         $this->content = $content;
     }
 
-    public function getAuthorId(){
-        return $this->author_id;
+    public function getAuthor(){
+        return $this->author;
     }
 
-    public function setAuthorId(string $author_id): void{
-        $this->author_id = $author_id;
+    public function setAuthor(string $author): void{
+        $this->author = $author;
     }
 
     public function getCreatedAt(){

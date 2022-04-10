@@ -13,7 +13,6 @@ header('Access-Control-Allow-Headers: content-type, authorization');
 
 $token = str_replace('Basic ', '', getallheaders()['authorization']);
 
-
 if($_POST["type"] == "login") {
     $sql_select = "SELECT token FROM users";
     $test = $conn->query($sql_select)->fetchAll();

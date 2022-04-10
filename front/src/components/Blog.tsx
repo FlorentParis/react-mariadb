@@ -1,10 +1,11 @@
-export default function Blog() {
-    return (
-        <div>
+export default function Blog(props: {blogs: any}) {
+
+    return props.blogs.map((blog: Object, index: any) => (
+        <div key={index}>
             <h1>Titre</h1>
             <div>Par : Auteur</div>
             <div>Le : Date</div>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam nobis ab quaerat doloremque repudiandae dolores aspernatur doloribus necessitatibus aperiam tenetur assumenda maiores illo, quo neque recusandae minima blanditiis optio? Est!</p>
         </div>
-    )
+    ))
 }
