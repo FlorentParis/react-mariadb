@@ -2,16 +2,20 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import Subscription from "./components/Subscription";
 import Login from "./components/Login";
+import BlogList from './components/BlogList';
 
 export default function App() {
 
   const [mail, setMail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [type, setType] = useState<string>('');
+  const [token, setToken] = useState<string>('');
 
   useEffect(() => {
     const body = new URLSearchParams({
-      type: type
+      type: type,
+      email: mail,
+      password: password
     });
 
     const headers = new Headers({
@@ -26,16 +30,20 @@ export default function App() {
       mode: 'cors',
       credentials: 'include'
     })
-      .then(res =>res.json()) 
-      .then(data => console.log(data))
-  }, [mail]);
+      .then(res => res.json()) 
+      .then(data => setToken(data["cookie"]))
+  }, [type]);
+
+  function deco() {
+    setType("deco");
+  }
 
   return (
     <div className="App">
-      <span>{mail}</span>
-      <span>{password}</span>
-      <Subscription setMail={setMail} setPassword={setPassword} setType={setType} />
-      <Login setMail={setMail} setPassword={setPassword} setType={setType}/>
+      {token ? <button onClick={deco}>Déconnexion</button> : '' }
+      {!token ? <Subscription setMail={setMail} setPassword={setPassword} setType={setType} /> : '' }
+      {!token ? <Login setMail={setMail} setPassword={setPassword} setType={setType}/> : '' }
+      {token ? <BlogList />  : '' }
     </div>
   );
 }

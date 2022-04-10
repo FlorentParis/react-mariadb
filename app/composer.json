@@ -1,0 +1,14 @@
+{
+    "name": "flo/react-api",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Florent PARIS",
+            "email": "florentparis28@gmail.com"
+        }
+    ]
+}

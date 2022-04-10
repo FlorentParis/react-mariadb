@@ -1,13 +1,18 @@
 <?php
+require 'vendor/autoload.php';
 
-include "connexion_db.php";
+use App\config\PDOFactory;
+use App\entity\User;
+use App\models\UserManager;
+
+$conn = (new PDOFactory())->getConnection();
 
 header('Access-Control-Allow-Origin: http://localhost:3000');
 header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Allow-Headers: content-type, authorization');
 
-
 $token = str_replace('Basic ', '', getallheaders()['authorization']);
+
 
 if($_POST["type"] == "login") {
     $sql_select = "SELECT token FROM users";
@@ -17,15 +22,24 @@ if($_POST["type"] == "login") {
             setcookie('token', $token);
         }
     }
+    $_POST["type"] = null;
 }
 
 /* Hash PW */
 if($_POST["type"] == "subscription") {
-    $pw = substr(base64_decode($token), strpos(base64_decode($token), ':') + 1);
-    $email = substr(base64_decode($token), 0, strrpos(base64_decode($token), ':'));
-    $sql_insert = "INSERT INTO users(token, email, password) VALUES(?, ?, ?)";
-    $conn->prepare($sql_insert)->execute([$token, $email, $pw]);
+    $user = new User();
+    $user->setToken($token);
+    $user->setEmail($_POST["email"]);
+    $user->setPassword($_POST["password"]);
+    $register = new UserManager($conn);
+    $register->addUser($user);
     setcookie('token', $token);
+    $_POST["type"] = null;
+}
+
+if($_POST["type"] == "deco"){
+    unset($_COOKIE["token"]);
+    setcookie("token", '', time() - 3600);
 }
 
 echo json_encode([
