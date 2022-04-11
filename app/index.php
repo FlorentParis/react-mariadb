@@ -3,7 +3,9 @@ require 'vendor/autoload.php';
 
 use App\config\PDOFactory;
 use App\entity\User;
+use App\entity\Post;
 use App\models\UserManager;
+use App\models\PostManager;
 
 $conn = (new PDOFactory())->getConnection();
 
@@ -40,6 +42,17 @@ if($_POST["type"] == "deco"){
     unset($_COOKIE["token"]);
     setcookie("token", '', time() - 3600);
 }
+
+/* A lancer si nouveau post */
+/* if($_POST["newPost"]){
+   $test = json_decode($_POST["newPost"]);
+   $post = new Post();
+   $post->setTitle($test["title"]);
+   $post->setContent($test["content"]);
+   $post->setToken($token);
+   $sendPost = new PostManager($conn);
+   $sendPost->createdPost($post);
+} */
 
 echo json_encode([
     'message' => $_POST,

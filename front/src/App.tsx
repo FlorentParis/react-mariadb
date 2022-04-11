@@ -14,11 +14,14 @@ export default function App() {
   const [type, setType] = useState<string>('');
   const [token, setToken] = useState<string>('');
 
+  const [blogs, setBlogs] = useState<Array<Object>>([]);
+
   useEffect(() => {
     const body = new URLSearchParams({
       type: type,
       email: mail,
-      password: password
+      password: password,
+      blogs: JSON.stringify(blogs)
     });
 
     const headers = new Headers({
@@ -46,7 +49,7 @@ export default function App() {
       {token ? <button onClick={deco}>Déconnexion</button> : '' }
       {!token ? <Subscription setMail={setMail} setPassword={setPassword} setType={setType} /> : '' }
       {!token ? <Login setMail={setMail} setPassword={setPassword} setType={setType}/> : '' }
-      {token ? <BlogList mail={mail} pw={password} />  : '' }
+      {token ? <BlogList blogs={blogs} setBlogs={setBlogs} mail={mail} pw={password} />  : '' }
     </div>
   );
 }
